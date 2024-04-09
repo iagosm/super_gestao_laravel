@@ -13,14 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return 'Olá, seja bem vindo ao curso! hello world';
-});
+Route::get('/', 'PrincipalController@principal');
 
-Route::get('/sobrenos', function () {
-    return 'Olá, seja bem vindo a sobrenos! hello world';
-});
+Route::get('/sobrenos', 'SobreNosController@sobreNos');
 
-Route::get('/contato', function () {
-    return 'Olá, seja bem vindo ao contato! hello world';
+Route::get('/contato', 'ContatoController@contato');
+
+Route::get('/contato/{nome}/{chaves}/{hehe}', function(string $nome, string $chave, string $hehe) {
+  echo 'estamos aqui, só pra testar ' . $nome .' e de quebrada temos a chave:' . $chave . ' e ainda o hehe: ' . $hehe;
 });
