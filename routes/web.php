@@ -13,12 +13,40 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'PrincipalController@principal');
+Route::get('/', 'PrincipalController@principal')->name('site.index');
+Route::get('/sobrenos', 'SobreNosController@sobreNos')->name('site.sobrenos');
+Route::get('/contato', 'ContatoController@contato')->name('site.contato');
+Route::get('/login', function(){
+  return 'Login';
+})->name('site.login');
 
-Route::get('/sobrenos', 'SobreNosController@sobreNos');
-
-Route::get('/contato', 'ContatoController@contato');
-
-Route::get('/contato/{nome}/{chaves}/{hehe}', function(string $nome, string $chave, string $hehe) {
-  echo 'estamos aqui, só pra testar ' . $nome .' e de quebrada temos a chave:' . $chave . ' e ainda o hehe: ' . $hehe;
+Route::prefix('/app')->group(function() {
+  Route::get('/clientes', function(){
+    return 'Clientes';
+  })->name('app.clientes');
+  Route::get('/fornecedores', 'FornecedorController@index')->name('app.fornecedores');
+  Route::get('/produtos', function(){
+    return 'Produtos';
+  })->name('app.produtos');
 });
+
+
+Route::get('/teste/{p1}/{p2}', 'TesteController@teste')->name('teste');
+
+// Route::get('/rota2', function() {
+//   return redirect()->route('site.rota1'); 
+// })->name('site.rota2');
+// Route::redirect('/rota2', '/rota1');
+
+
+Route::fallback(function(){
+  echo 'Rota não localizada! <a href="'. route('site.index').'">Clique aqui</a> para voltar para página inicial';
+});
+
+// Route::get('/contato/{nome}/{categoria_id}', 
+// function(
+//   string $nome = "Desconhecido", 
+//   int $categoria_id = 1
+//   ) {
+//   echo 'estamos aqui: ' . $nome .' - ' . $categoria_id;
+// })->where('categoria_id', '[0-9]+')->where('nome', '[A-Za-z]+');
